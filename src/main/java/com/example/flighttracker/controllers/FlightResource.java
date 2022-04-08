@@ -1,7 +1,12 @@
 package com.example.flighttracker.controllers;
 
-import javax.annotation.Resource;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
 
-@Resource
+@Controller
+@RequestMapping("flightTracker/api/v1/flights")
 public class FlightResource {
+
+
+
 }
