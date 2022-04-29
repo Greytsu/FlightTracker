@@ -1,18 +1,17 @@
 package com.example.flighttracker.models;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
-import java.sql.Timestamp;
+import java.util.Date;
 
 @Entity
 @Getter
 @Setter
-@Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class FlightInfo {
 
     @Id
@@ -24,13 +23,26 @@ public class FlightInfo {
     private int alt;
     private int dir;
     private int speed;
-    private int v_speed;
-    private Timestamp updated;
+    private double v_speed;
+    private Date updated;
     private String status;
 
-    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "flight_hex")
     private Flight flight;
 
+    @Override
+    public String toString() {
+        return "FlightInfo{" +
+                "id='" + id + '\'' +
+                ", lat=" + lat +
+                ", lng=" + lng +
+                ", alt=" + alt +
+                ", dir=" + dir +
+                ", speed=" + speed +
+                ", v_speed=" + v_speed +
+                ", updated=" + updated +
+                ", status='" + status + '\'' +
+                '}';
+    }
 }
