@@ -16,7 +16,7 @@ import java.util.Date;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping(path = "flightTracker/api/v1/flightInfo")
+@RequestMapping(path = "/v1/flightInfo")
 public class FlightInfoResource {
 
     private static final int HOUR = 3600 * 1000;
