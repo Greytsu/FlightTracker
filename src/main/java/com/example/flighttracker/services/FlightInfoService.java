@@ -13,8 +13,8 @@ public class FlightInfoService {
 
     private final FlightInfoRepository flightInfoRepository;
 
-    public Page<FlightInfo> getFlightInfos(Pageable paging){
-        return flightInfoRepository.getAllByGeolocation(paging);
+    public Page<FlightInfo> getFlightInfos(Pageable paging, double ne_lat, double ne_lng, double sw_lat, double sw_lng){
+        return flightInfoRepository.getAllByCoordinates(paging, ne_lat, ne_lng, sw_lat, sw_lng);
     }
 
 }
