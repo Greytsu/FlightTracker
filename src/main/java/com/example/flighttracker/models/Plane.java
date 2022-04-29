@@ -4,6 +4,7 @@ import lombok.*;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Entity
 @Getter
@@ -12,6 +13,7 @@ import javax.persistence.Id;
 @AllArgsConstructor
 @Builder
 @ToString
+@Table(name = "Plane")
 public class Plane {
 
     @Id

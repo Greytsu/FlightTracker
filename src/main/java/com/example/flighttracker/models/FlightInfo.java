@@ -1,7 +1,6 @@
 package com.example.flighttracker.models;
 
 import lombok.*;
-import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -12,7 +11,7 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@Table(name = "flightInfos")
+@Table(name = "FlightInfo")
 public class FlightInfo {
 
     @Id
