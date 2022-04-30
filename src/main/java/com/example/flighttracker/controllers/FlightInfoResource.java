@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.sql.Timestamp;
 import java.util.Date;
 
 @RequiredArgsConstructor
@@ -31,12 +32,12 @@ public class FlightInfoResource {
             @RequestParam(defaultValue = "180", name = "ne_lng") double ne_lng,
             @RequestParam(defaultValue = "-90", name = "sw_lat") double sw_lat,
             @RequestParam(defaultValue = "-180", name = "sw_lng") double sw_lng,
-            @RequestParam(name = "datetime", required = false) Date datetime
+            @RequestParam(name = "timestamp", required = false) Timestamp timestamp
     ){
 
-        if(null == datetime){
-            datetime = new Date(System.currentTimeMillis() - HOUR);
-        }
+        Date updatedAt = null == timestamp
+                ? new Date(System.currentTimeMillis() - HOUR)
+                : new Date(timestamp.getTime());
 
         if(!CoordinatesUtils.CoordinatesCheck(ne_lat, ne_lng, sw_lat, sw_lng))
             return new ResponseEntity<>("Coordinates are wrong", HttpStatus.BAD_REQUEST);
@@ -44,7 +45,7 @@ public class FlightInfoResource {
         Pageable paging = PageRequest.of(page, size);
 
         try {
-            return new ResponseEntity<>(flightInfoService.getFlightInfos(paging, ne_lat, ne_lng, sw_lat, sw_lng), HttpStatus.OK);
+            return new ResponseEntity<>(flightInfoService.getFlightInfos(paging, ne_lat, ne_lng, sw_lat, sw_lng, updatedAt), HttpStatus.OK);
         }
         catch (Exception e){
             return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
