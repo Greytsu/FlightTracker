@@ -1,7 +1,6 @@
 package com.example.flighttracker.controllers;
 
 import com.example.flighttracker.services.FlightInfoService;
-import com.example.flighttracker.utils.CoordinatesUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -28,10 +27,6 @@ public class FlightInfoResource {
     public ResponseEntity<Object> getFlightInfos(
             @RequestParam(defaultValue = "0", name = "page") int page,
             @RequestParam(defaultValue = "100", name = "size") int size,
-            @RequestParam(defaultValue = "90", name = "ne_lat") double ne_lat,
-            @RequestParam(defaultValue = "180", name = "ne_lng") double ne_lng,
-            @RequestParam(defaultValue = "-90", name = "sw_lat") double sw_lat,
-            @RequestParam(defaultValue = "-180", name = "sw_lng") double sw_lng,
             @RequestParam(name = "timestamp", required = false) Timestamp timestamp
     ){
 
@@ -39,13 +34,10 @@ public class FlightInfoResource {
                 ? new Date(System.currentTimeMillis() - HOUR)
                 : new Date(timestamp.getTime());
 
-        if(!CoordinatesUtils.CoordinatesCheck(ne_lat, ne_lng, sw_lat, sw_lng))
-            return new ResponseEntity<>("Coordinates are wrong", HttpStatus.BAD_REQUEST);
-
         Pageable paging = PageRequest.of(page, size);
 
         try {
-            return new ResponseEntity<>(flightInfoService.getFlightInfos(paging, ne_lat, ne_lng, sw_lat, sw_lng, updatedAt), HttpStatus.OK);
+            return new ResponseEntity<>(flightInfoService.getFlightInfos(paging, updatedAt), HttpStatus.OK);
         }
         catch (Exception e){
             return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);

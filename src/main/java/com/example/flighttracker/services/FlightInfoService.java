@@ -17,14 +17,17 @@ public class FlightInfoService {
     private final FlightInfoRepository flightInfoRepository;
     private static final int HOUR = 3600 * 1000;
 
-    public Page<FlightInfo> getFlightInfos(Pageable paging, double ne_lat, double ne_lng, double sw_lat, double sw_lng, Date updatedAfter){
+    public Page<FlightInfo> getFlightInfos(Pageable paging, Date updatedBefore){
 
         Calendar c = Calendar.getInstance();
-        c.setTime(updatedAfter);
-        c.add(Calendar.HOUR, 1);
-        Date updatedBefore = c.getTime();
+        c.setTime(updatedBefore);
+        c.add(Calendar.HOUR, -1);
+        Date updatedAfter = c.getTime();
 
-        return flightInfoRepository.getAllByCoordinates(paging, ne_lat, ne_lng, sw_lat, sw_lng, updatedAfter, updatedBefore);
+        System.out.println(updatedAfter);
+        System.out.println(updatedBefore);
+
+        return flightInfoRepository.getAllByCoordinates(paging, updatedAfter, updatedBefore);
     }
 
 }
