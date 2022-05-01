@@ -2,6 +2,7 @@ package com.example.flighttracker.controllers;
 
 import com.example.flighttracker.services.FlightInfoService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -17,6 +18,7 @@ import java.util.Date;
 @RequiredArgsConstructor
 @RestController
 @RequestMapping(path = "/v1/flightInfo")
+@Log4j2
 public class FlightInfoResource {
 
     private static final int HOUR = 3600 * 1000;
@@ -29,10 +31,12 @@ public class FlightInfoResource {
             @RequestParam(defaultValue = "100", name = "size") int size,
             @RequestParam(name = "timestamp", required = false) Timestamp timestamp
     ){
-
         Date updatedAt = null == timestamp
                 ? new Date(System.currentTimeMillis() - HOUR)
                 : new Date(timestamp.getTime());
+
+
+        log.info("GET PLANES UPDATED AT : " + updatedAt);
 
         Pageable paging = PageRequest.of(page, size);
 
